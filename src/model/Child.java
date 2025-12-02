@@ -15,6 +15,7 @@ public class Child extends Person
     public Child(String name, String sex, int age){
         super(name);
         this.sex = sex;
+        this.age = age;
         setAge(age); // bruger samme validering
     }
     public String getSex()

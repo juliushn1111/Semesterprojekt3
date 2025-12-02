@@ -18,12 +18,14 @@ public class Room {
 
     // Flere personer
     private ArrayList<Person> persons;
-
+    // Liste af børn
+    private ArrayList<Child> children;
 
     public Room(String name) {
         this.name = name;
         this.informationList = new ArrayList<>();
         this.persons = new ArrayList<>();
+        this.children = new ArrayList<>();
         this.agenda = null;
         this.calender = null;
     }
@@ -70,6 +72,18 @@ public class Room {
 
     public Calender getCalender() {
         return this.calender;
+    }
+    // ---------- CHILD ----------
+    public void addChild(Child child) {
+        children.add(child);
+    }
+
+    public void removeChild(String name) {
+        children.removeIf(c -> c.getName().equals(name));
+    }
+
+    public Child[] getChildren() {
+        return children.toArray(new Child[0]);
     }
 
     // ---------- TOSTRING ----------

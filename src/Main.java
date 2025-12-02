@@ -1,15 +1,19 @@
-import javafx.application.Application;
-import javafx.stage.Stage;
-import view.ViewHandler;
+import model.Institution;
+import model.Room;
+import model.Child;
 
-public class Main extends Application
-{
-    public void start(Stage primaryStage)
-    {
-        new ViewHandler(primaryStage);
-    }
-    public static void main(String[] args)
-    {
-        Application.launch(Main.class);
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Backend test kører");
+
+        Institution institution = new Institution("Børnehuset Solstrålen");
+        Room room = new Room("Rød stue");
+        Child child = new Child("Oliver", "Hansen", 3);
+
+        room.addChild(child);  // ← Kun dette kalder den nye metode
+
+        System.out.println(institution);
+        System.out.println(room);
+        System.out.println(child);
     }
 }
