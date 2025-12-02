@@ -4,7 +4,7 @@ import model.Child;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Backend test kører123");
+        System.out.println("Backend test kører1234");
 
         Institution institution = new Institution("Børnehuset Solstrålen");
         Room room = new Room("Rød stue");
