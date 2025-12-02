@@ -11,7 +11,7 @@ public class ViewHandler
     { this.primaryStage = primaryStage;
         this.primaryStage.setTitle("A Simple Window");
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("SimpleGUI.fxml"));
+        loader.setLocation(getClass().getResource("/SimpleGUI.fxml"));
         try
         { simpleGUIScene = new Scene(loader.load());
             this.primaryStage.setScene(simpleGUIScene);
