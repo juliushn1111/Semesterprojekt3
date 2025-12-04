@@ -132,8 +132,8 @@
             <children>
                 <Button fx:id="weatherButton" onAction="#handleWeatherButton" prefHeight="140" prefWidth="140" style="-fx-font-size: 48px;" text="☀" />
 
-                <Button fx:id="criticalButton" prefHeight="140" prefWidth="140" style="-fx-font-size: 48px; -fx-text-fill: red;" text="!" />
-                <Button fx:id="infoButton" prefHeight="140" prefWidth="140" style="-fx-font-size: 48px;" text="i" />
+                <Button fx:id="criticalButton" onAction="#handleCriticalButton" prefHeight="140" prefWidth="140" style="-fx-font-size: 48px; -fx-text-fill: red;" text="!" />
+                <Button fx:id="infoButton" onAction="#handleInfoButton" prefHeight="140" prefWidth="140" style="-fx-font-size: 48px;" text="i" />
             </children>
         </VBox>
     </right>

@@ -176,4 +176,18 @@ public class SimpleGUIController {
             System.out.println(">>> viewHandler is NULL");
         }
     }
+
+    @FXML
+    private void handleInfoButton() {
+        if (viewHandler != null) {
+            viewHandler.openInfoView();
+        }
+    }
+
+    @FXML
+    private void handleCriticalButton() {
+        if (viewHandler != null) {
+            viewHandler.openCriticalView();
+        }
+    }
 }

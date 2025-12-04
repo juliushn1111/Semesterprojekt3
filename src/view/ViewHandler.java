@@ -1,6 +1,5 @@
 package view;
 
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -19,15 +18,20 @@ public class ViewHandler {
     private Scene weatherScene;
     private WeatherViewController weatherController;
 
+    // 🔹 Info-view
+    private Scene infoScene;
+    private InfoViewController infoController;
+
+    // Critical-View
+    private Scene criticalScene;
+    private CriticalViewController criticalController;
+
     public ViewHandler(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Børnehuset Solstrålen");
 
         try {
             FXMLLoader loader = new FXMLLoader();
-
-            // FXML ligger i samme package som ViewHandler → kun filnavn
-            System.out.println("FXML location: " + getClass().getResource("SimpleGUI.fxml"));
             loader.setLocation(getClass().getResource("SimpleGUI.fxml"));
 
             simpleGUIScene = new Scene(loader.load());
@@ -43,18 +47,16 @@ public class ViewHandler {
         }
     }
 
-    // Bruges af WeatherViewController til at gå tilbage til dashboardet
+    // tilbage til hoved-skærmen
     public void openMainView() {
         primaryStage.setScene(simpleGUIScene);
         primaryStage.show();
     }
 
-    // Bruges af SimpleGUIController når man trykker på vejrikonet
+    // Vejr-view
     public void openWeatherView() {
         try {
             FXMLLoader loader = new FXMLLoader();
-
-            System.out.println("FXML location: " + getClass().getResource("WeatherView.fxml"));
             loader.setLocation(getClass().getResource("WeatherView.fxml"));
 
             weatherScene = new Scene(loader.load());
@@ -65,6 +67,42 @@ public class ViewHandler {
             primaryStage.show();
         } catch (IOException e) {
             System.out.println("Failed to load WeatherView.fxml");
+            e.printStackTrace();
+        }
+    }
+
+    // 🔹 Info-view
+    public void openInfoView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("InfoView.fxml"));
+
+            infoScene = new Scene(loader.load());
+            infoController = loader.getController();
+            infoController.init(this);
+
+            primaryStage.setScene(infoScene);
+            primaryStage.show();
+        } catch (IOException e) {
+            System.out.println("Failed to load InfoView.fxml");
+            e.printStackTrace();
+        }
+    }
+
+    // 🔹Critical
+    public void openCriticalView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("CriticalView.fxml"));
+
+            criticalScene = new Scene(loader.load());
+            criticalController = loader.getController();
+            criticalController.init(this);
+
+            primaryStage.setScene(criticalScene);
+            primaryStage.show();
+        } catch (IOException e) {
+            System.out.println("Failed to load CriticalView.fxml");
             e.printStackTrace();
         }
     }
