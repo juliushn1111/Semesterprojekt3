@@ -1,16 +1,31 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Institution {
+public class Institution implements Serializable {
 
     private String name;
+
+    // RUM
     private ArrayList<Room> rooms;
+
+    // CRITICAL INFO
+    private ArrayList<CriticalInfo> criticalInfoList;
 
     public Institution(String name) {
         this.name = name;
         this.rooms = new ArrayList<>();
+        this.criticalInfoList = new ArrayList<>();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    // =========================
+    //        ROOMS
+    // =========================
 
     // Tilføj et rum
     public void addRoom(String roomName) {
@@ -23,7 +38,7 @@ public class Institution {
         for (int i = 0; i < rooms.size(); i++) {
             if (rooms.get(i).getName().equals(roomName)) {
                 rooms.remove(i);
-                i--; // vigtigt for at ikke springe et rum over
+                i--; // så vi ikke springer et rum over
             }
         }
     }
@@ -44,10 +59,11 @@ public class Institution {
                 return rooms.get(i);
             }
         }
-        return null; // returner null, hvis rummet ikke findes
+        return null; // hvis rummet ikke findes
     }
 
     // ---------- VIDERE TIL ROOM ----------
+
     public void addPersonToRoom(String roomName, String personName) {
         Room r = findRoom(roomName);
         if (r != null) {
@@ -74,6 +90,24 @@ public class Institution {
         if (r != null) {
             r.setCalender(day, event);
         }
+    }
+
+    // =========================
+    //    CRITICAL INFO
+    // =========================
+
+    public void addCriticalInfo(CriticalInfo info) {
+        criticalInfoList.add(info);
+    }
+
+    public void removeCriticalInfo(int index) {
+        if (index >= 0 && index < criticalInfoList.size()) {
+            criticalInfoList.remove(index);
+        }
+    }
+
+    public ArrayList<CriticalInfo> getCriticalInfoList() {
+        return criticalInfoList;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package model;
 
-public class Calender {
+import java.io.Serializable;
+
+public class Calender implements Serializable {
     private String day;
     private String event;
 

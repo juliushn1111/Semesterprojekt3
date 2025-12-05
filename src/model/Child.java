@@ -1,9 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Objects;
-// Child nedarver fra Person og udvider med information
-// om barnets køn og alder.
-public class Child extends Person
+
+public class Child extends Person implements Serializable
 {
     // Barnets køn (f.eks. "male", "female", "other").
     private String sex;

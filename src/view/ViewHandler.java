@@ -3,6 +3,8 @@ package view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Institution;
+import persistence.ModelManager;
 
 import java.io.IOException;
 
@@ -18,42 +20,68 @@ public class ViewHandler {
     private Scene weatherScene;
     private WeatherViewController weatherController;
 
-    // 🔹 Info-view
+    // Info-view
     private Scene infoScene;
     private InfoViewController infoController;
 
-    // Critical-View
+    // Critical-view
     private Scene criticalScene;
     private CriticalViewController criticalController;
+
+    // ====== MODEL + PERSISTENCE ======
+    private Institution institution;
+    private ModelManager modelManager;
 
     public ViewHandler(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Børnehuset Solstrålen");
 
+        // Opret ModelManager og forsøg at loade data fra fil
+        modelManager = new ModelManager("institutionData.bin");
+        institution = modelManager.load();
+
+        // Hvis der ikke fandtes en fil, laver vi en ny tom institution
+        if (institution == null) {
+            institution = new Institution("Børnehuset Solstrålen");
+        }
+
+        // Start på hovedskærmen
+        openMainView();
+    }
+
+    // Giver controllers adgang til modellen
+    public Institution getInstitution() {
+        return institution;
+    }
+
+    // Kaldes fra controllers når der er ændret i modellen
+    public void saveInstitution() {
+        modelManager.save(institution);
+    }
+
+    // ==========================
+    //  MAIN VIEW
+    // ==========================
+    public void openMainView() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("SimpleGUI.fxml"));
 
             simpleGUIScene = new Scene(loader.load());
             simpleGUIController = loader.getController();
-            simpleGUIController.init(this);
+            simpleGUIController.init(this);   // giver ViewHandler videre
 
-            this.primaryStage.setScene(simpleGUIScene);
-            this.primaryStage.show();
+            primaryStage.setScene(simpleGUIScene);
+            primaryStage.show();
         } catch (IOException e) {
             System.out.println("Failed to load SimpleGUI.fxml");
             e.printStackTrace();
-            System.exit(1);
         }
     }
 
-    // tilbage til hoved-skærmen
-    public void openMainView() {
-        primaryStage.setScene(simpleGUIScene);
-        primaryStage.show();
-    }
-
-    // Vejr-view
+    // ==========================
+    //  WEATHER VIEW
+    // ==========================
     public void openWeatherView() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -71,7 +99,9 @@ public class ViewHandler {
         }
     }
 
-    // 🔹 Info-view
+    // ==========================
+    //  INFO VIEW
+    // ==========================
     public void openInfoView() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -89,7 +119,9 @@ public class ViewHandler {
         }
     }
 
-    // 🔹Critical
+    // ==========================
+    //  CRITICAL VIEW
+    // ==========================
     public void openCriticalView() {
         try {
             FXMLLoader loader = new FXMLLoader();

@@ -1,6 +1,8 @@
 package model;
 
-public class Information
+import java.io.Serializable;
+
+public class Information implements Serializable
 {
     private String info;
     private String name;

@@ -1,6 +1,8 @@
 package model;
 
-public class Agenda {
+import java.io.Serializable;
+
+public class Agenda implements Serializable {
     private int time;
     private String entry;
 

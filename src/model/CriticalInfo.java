@@ -1,22 +1,25 @@
 package model;
 
-public class CriticalInfo extends Information
-{
+import java.io.Serializable;
 
-    private int id;
+public class CriticalInfo implements Serializable {
 
-    public CriticalInfo(String info, String name, int id)
-    {
-        super(info, name);
-        this.id = id;
+    private String kritik;
+
+    public CriticalInfo(String kritik) {
+        this.kritik = kritik;
     }
 
-    public int getId()
-    {
-        return id;
+    public String getKritik() {
+        return kritik;
     }
 
+    public void setKritik(String kritik) {
+        this.kritik = kritik;
+    }
+
+    @Override
     public String toString() {
-        return "CriticalInfo[id=" + id + ", name=" + getName() + ", info=" + getInfo() + "]";
+        return kritik;
     }
 }
