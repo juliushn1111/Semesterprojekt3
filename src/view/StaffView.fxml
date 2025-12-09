@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefWidth="600" prefHeight="500"
+            xmlns="http://javafx.com/javafx/20.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="view.StaffViewController">
+
+    <top>
+        <Label text="Redigér bemanding"
+               style="-fx-font-size: 22px; -fx-font-weight: bold;"
+               BorderPane.alignment="CENTER"/>
+    </top>
+
+    <center>
+        <VBox spacing="10" padding="20">
+
+            <ListView fx:id="staffListView" prefHeight="300"/>
+
+            <TextField fx:id="staffInputField"
+                       promptText="Navn på personale"/>
+
+            <HBox spacing="10">
+                <Button text="Tilføj" onAction="#handleAddStaff"/>
+                <Button text="Redigér" onAction="#handleEditStaff"/>
+                <Button text="Slet" onAction="#handleDeleteStaff"/>
+            </HBox>
+
+        </VBox>
+    </center>
+
+    <bottom>
+        <Button text="Tilbage"
+                onAction="#handleBackButton"
+                BorderPane.alignment="CENTER"/>
+    </bottom>
+
+</BorderPane>

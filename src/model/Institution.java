@@ -53,7 +53,7 @@ public class Institution implements Serializable {
     }
 
     // Hjælpemetode: find et rum
-    private Room findRoom(String roomName) {
+    public Room findRoom(String roomName) {
         for (int i = 0; i < rooms.size(); i++) {
             if (rooms.get(i).getName().equals(roomName)) {
                 return rooms.get(i);

@@ -4,38 +4,87 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="800.0" prefWidth="1280.0"
+<BorderPane prefHeight="800.0"
+            prefWidth="1280.0"
             xmlns="http://javafx.com/javafx/20.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="view.SimpleGUIController">
 
-    <!-- ===== TOP: STUER + ADMIN ===== -->
+    <!-- ================== TOP ================== -->
     <top>
-        <VBox spacing="10" alignment="CENTER">
+        <VBox spacing="15" alignment="CENTER">
 
-            <!-- STUE KNAPPER -->
-            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
-                <FlowPane fx:id="roomButtonPane"
-                          hgap="15" vgap="15"
-                          alignment="CENTER"
-                          prefWrapLength="1000"
-                          style="-fx-padding: 10;" />
-            </ScrollPane>
+            <!-- UGEOVERSIGT -->
+            <HBox alignment="CENTER" spacing="40">
+                <padding>
+                    <Insets top="15" bottom="5" left="20" right="20"/>
+                </padding>
 
-            <!-- ADMIN TIL STUER -->
-            <HBox spacing="10" alignment="CENTER">
-                <TextField fx:id="newRoomField" promptText="Stuenavn"/>
-                <Button text="Opret stue" onAction="#handleAddRoom"/>
-                <Button text="Omdøb stue" onAction="#handleRenameRoom"/>
-                <Button text="Slet stue" onAction="#handleDeleteRoom"/>
+                <children>
+                    <VBox alignment="TOP_CENTER">
+                        <Label style="-fx-font-size:20px;" text="Mandag"/>
+                        <Label fx:id="mondayEventLabel"/>
+                    </VBox>
+
+                    <VBox alignment="TOP_CENTER">
+                        <Label style="-fx-font-size:20px;" text="Tirsdag"/>
+                        <Label fx:id="tuesdayEventLabel"/>
+                    </VBox>
+
+                    <VBox alignment="TOP_CENTER">
+                        <Label style="-fx-font-size:20px;" text="Onsdag"/>
+                        <Label fx:id="wednesdayEventLabel"/>
+                    </VBox>
+
+                    <VBox alignment="TOP_CENTER">
+                        <Label style="-fx-font-size:20px;" text="Torsdag"/>
+                        <Label fx:id="thursdayEventLabel"/>
+                    </VBox>
+
+                    <VBox alignment="TOP_CENTER">
+                        <Label style="-fx-font-size:20px;" text="Fredag"/>
+                        <Label fx:id="fridayEventLabel"/>
+                    </VBox>
+                </children>
+            </HBox>
+
+            <!-- STUE + DAG REDIGERING -->
+            <HBox alignment="CENTER" spacing="10">
+                <children>
+
+                    <Label text="Stue:"/>
+                    <ComboBox fx:id="roomComboBox"
+                              prefWidth="160"
+                              onAction="#handleRoomChange"/>
+
+                    <Button text="+"
+                            prefWidth="35"
+                            onAction="#handleAddRoom"/>
+
+                    <Button text="-"
+                            prefWidth="35"
+                            onAction="#handleDeleteRoom"/>
+
+                    <Label text="Dag:"/>
+                    <ComboBox fx:id="weekdayComboBox"
+                              prefWidth="120"/>
+
+                    <TextField fx:id="weekdayTextField"
+                               promptText="Aktivitet på valgt dag"
+                               prefWidth="250"/>
+
+                    <Button text="Gem dag"
+                            onAction="#handleSaveWeekday"/>
+
+                </children>
             </HBox>
 
         </VBox>
     </top>
 
-    <!-- VENSTRE: AGENDA -->
+    <!-- ================== VENSTRE: AGENDA ================== -->
     <left>
-        <VBox spacing="10" BorderPane.alignment="CENTER">
+        <VBox spacing="10.0">
             <padding>
                 <Insets bottom="20" left="20" right="20" top="20"/>
             </padding>
@@ -52,57 +101,76 @@
         </VBox>
     </left>
 
-    <!-- CENTER -->
+    <!-- ================== CENTER ================== -->
     <center>
-        <VBox spacing="25" BorderPane.alignment="CENTER">
+        <VBox spacing="25">
             <padding>
-                <Insets bottom="20" left="20" right="20" top="10" />
+                <Insets bottom="20" left="20" right="20" top="10"/>
             </padding>
 
+            <!-- BEMANDING -->
             <VBox spacing="10">
                 <children>
                     <Label style="-fx-font-size: 22px; -fx-font-weight: bold;"
-                           text="BEMANDING LIGE NU" />
-                    <ListView fx:id="staffListView" prefHeight="150" prefWidth="180"/>
+                           text="BEMANDING LIGE NU"/>
+                    <ListView fx:id="staffListView"
+                              prefHeight="150"
+                              prefWidth="250"/>
                 </children>
             </VBox>
 
+            <!-- BØRN -->
             <VBox spacing="10">
                 <children>
                     <Label fx:id="roomTitleLabel"
-                           style="-fx-font-size: 22px; -fx-font-weight: bold;"
-                           text="Børneoversigt:" />
+                           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
                     <ListView fx:id="childrenListView"
                               prefHeight="250"
                               prefWidth="750"/>
                 </children>
             </VBox>
+
         </VBox>
     </center>
 
-    <!-- HØJRE -->
+    <!-- ================== HØJRE ================== -->
     <right>
-        <VBox spacing="30" BorderPane.alignment="CENTER">
+        <VBox spacing="30">
             <padding>
-                <Insets bottom="40" left="20" right="20" top="40" />
+                <Insets bottom="40" left="20" right="20" top="40"/>
             </padding>
 
             <children>
+
+                <!-- VEJR -->
                 <Button onAction="#handleWeatherButton"
-                        prefHeight="140" prefWidth="140"
+                        prefHeight="140"
+                        prefWidth="140"
                         style="-fx-font-size: 48px;"
-                        text="☀" />
+                        text="☀"/>
 
+                <!-- PERSONALE -->
+                <Button onAction="#handleStaffButton"
+                        prefHeight="140"
+                        prefWidth="140"
+                        style="-fx-font-size: 48px;"
+                        text="👥"/>
+
+                <!-- CRITICAL -->
                 <Button onAction="#handleCriticalButton"
-                        prefHeight="140" prefWidth="140"
+                        prefHeight="140"
+                        prefWidth="140"
                         style="-fx-font-size: 48px; -fx-text-fill: red;"
-                        text="!" />
+                        text="!"/>
 
+                <!-- INFO -->
                 <Button onAction="#handleInfoButton"
-                        prefHeight="140" prefWidth="140"
+                        prefHeight="140"
+                        prefWidth="140"
                         style="-fx-font-size: 48px;"
-                        text="i" />
+                        text="i"/>
+
             </children>
         </VBox>
     </right>

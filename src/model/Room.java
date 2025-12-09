@@ -13,8 +13,8 @@ public class Room implements Serializable {
     // Agenda for denne stue (liste)
     private ArrayList<Agenda> agendaList;
 
-    // Enkelt kalender
-    private Calender calender;
+    // ✅ UGEPLAN (Mandag–Fredag) PR. STUE
+    private Calender[] weekPlan;
 
     // Personale-liste
     private ArrayList<Person> persons;
@@ -24,11 +24,18 @@ public class Room implements Serializable {
 
     public Room(String name) {
         this.name = name;
+
         this.informationList = new ArrayList<>();
         this.agendaList = new ArrayList<>();
         this.persons = new ArrayList<>();
         this.children = new ArrayList<>();
-        this.calender = null;
+
+        // ✅ INITIALISER UGEPLAN
+        String[] days = {"Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag"};
+        weekPlan = new Calender[5];
+        for (int i = 0; i < 5; i++) {
+            weekPlan[i] = new Calender(days[i], "");
+        }
     }
 
     // =========================================================
@@ -94,15 +101,28 @@ public class Room implements Serializable {
     }
 
     // =========================================================
-    //                        CALENDER
+    //                        UGEPLAN (NY)
     // =========================================================
 
+    // ✅ Gammel metode – bruges af Institution (kompatibilitet)
     public void setCalender(String day, String event) {
-        this.calender = new Calender(day, event);
+        for (Calender c : weekPlan) {
+            if (c.getDay().equalsIgnoreCase(day)) {
+                c.setEvent(event);
+                return;
+            }
+        }
     }
 
-    public Calender getCalender() {
-        return this.calender;
+    public Calender[] getWeekPlan() {
+        return weekPlan;
+    }
+
+    // Sæt aktivitet for en bestemt dag (0 = Mandag, 4 = Fredag)
+    public void setWeekEvent(int index, String event) {
+        if (index >= 0 && index < weekPlan.length) {
+            weekPlan[index].setEvent(event);
+        }
     }
 
     // =========================================================
@@ -133,6 +153,9 @@ public class Room implements Serializable {
         this.name = name;
     }
 
+    // =========================================================
+    //                        TOSTRING
+    // =========================================================
 
     @Override
     public String toString() {
@@ -140,7 +163,7 @@ public class Room implements Serializable {
                 "name='" + name + '\'' +
                 ", informationList=" + informationList +
                 ", agendaList=" + agendaList +
-                ", calender=" + calender +
+                ", weekPlan=" + java.util.Arrays.toString(weekPlan) +
                 ", persons=" + persons +
                 ", children=" + children +
                 '}';
