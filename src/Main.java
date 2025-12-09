@@ -6,10 +6,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        new ViewHandler(stage);
+        System.out.println("JavaFX starter nu...");
+
+        ViewHandler viewHandler = new ViewHandler(stage);
+
+        // ✅ VIGTIG RETTELSE:
+        viewHandler.openMainView();
+
+        stage.setTitle("Semesterprojekt");
+        stage.show();
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 }
