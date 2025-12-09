@@ -3,15 +3,16 @@ package model;
 import java.io.Serializable;
 
 public class Agenda implements Serializable {
-    private int time;
-    private String entry;
 
-    public Agenda(int time, String entry){
+    private String time;   // fx "08:00"
+    private String entry;  // fx "Morgenleg"
+
+    public Agenda(String time, String entry) {
         this.time = time;
         this.entry = entry;
     }
 
-    public int getTime() {
+    public String getTime() {
         return time;
     }
 
@@ -19,7 +20,7 @@ public class Agenda implements Serializable {
         return entry;
     }
 
-    public void setTime(int time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -27,8 +28,9 @@ public class Agenda implements Serializable {
         this.entry = entry;
     }
 
+    @Override
     public String toString() {
-        return "Time: " + time + ":00 -> What to do: " + entry + ".";
+        return time + " - " + entry;
     }
 }
 

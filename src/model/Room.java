@@ -7,30 +7,34 @@ public class Room implements Serializable {
 
     private String name;
 
-    // Flere informationer
+    // Informationer for denne stue
     private ArrayList<Information> informationList;
 
-    // Enkelt agenda
-    private Agenda agenda;
+    // Agenda for denne stue (liste)
+    private ArrayList<Agenda> agendaList;
 
     // Enkelt kalender
     private Calender calender;
 
-    // Flere personer
+    // Personale-liste
     private ArrayList<Person> persons;
+
     // Liste af børn
     private ArrayList<Child> children;
 
     public Room(String name) {
         this.name = name;
         this.informationList = new ArrayList<>();
+        this.agendaList = new ArrayList<>();
         this.persons = new ArrayList<>();
         this.children = new ArrayList<>();
-        this.agenda = null;
         this.calender = null;
     }
 
-    // ---------- PERSON ----------
+    // =========================================================
+    //                      PERSONALE
+    // =========================================================
+
     public void addPerson(String name) {
         persons.add(new Person(name));
     }
@@ -43,9 +47,12 @@ public class Room implements Serializable {
         return persons.toArray(new Person[0]);
     }
 
-    // ---------- INFORMATION ----------
-    public void addInformation(String info, String name) {
-        informationList.add(new Information(info, name));
+    // =========================================================
+    //                      INFORMATION
+    // =========================================================
+
+    public void addInformation(String info, String creatorName) {
+        informationList.add(new Information(info, creatorName));
     }
 
     public void removeInformation(String info) {
@@ -56,16 +63,40 @@ public class Room implements Serializable {
         return informationList.toArray(new Information[0]);
     }
 
-    // ---------- AGENDA ----------
-    public void setAgenda(int time, String entry) {
-        this.agenda = new Agenda(time, entry);
+    // Bruges af InfoViewController
+    public ArrayList<Information> getInformationList() {
+        return informationList;
     }
 
-    public Agenda getAgenda() {
-        return this.agenda;
+    // Bruges til sletning via liste-index
+    public void removeInformation(int index) {
+        if (index >= 0 && index < informationList.size()) {
+            informationList.remove(index);
+        }
     }
 
-    // ---------- CALENDER ----------
+    // =========================================================
+    //                          AGENDA
+    // =========================================================
+
+    public void addAgenda(String time, String entry) {
+        agendaList.add(new Agenda(time, entry));
+    }
+
+    public void removeAgenda(int index) {
+        if (index >= 0 && index < agendaList.size()) {
+            agendaList.remove(index);
+        }
+    }
+
+    public ArrayList<Agenda> getAgendaList() {
+        return agendaList;
+    }
+
+    // =========================================================
+    //                        CALENDER
+    // =========================================================
+
     public void setCalender(String day, String event) {
         this.calender = new Calender(day, event);
     }
@@ -73,7 +104,11 @@ public class Room implements Serializable {
     public Calender getCalender() {
         return this.calender;
     }
-    // ---------- CHILD ----------
+
+    // =========================================================
+    //                         CHILDREN
+    // =========================================================
+
     public void addChild(Child child) {
         children.add(child);
     }
@@ -86,19 +121,28 @@ public class Room implements Serializable {
         return children.toArray(new Child[0]);
     }
 
-    // ---------- TOSTRING ----------
+    // =========================================================
+    //                        MISC
+    // =========================================================
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
     @Override
     public String toString() {
         return "Room{" +
                 "name='" + name + '\'' +
                 ", informationList=" + informationList +
-                ", agenda=" + agenda +
+                ", agendaList=" + agendaList +
                 ", calender=" + calender +
                 ", persons=" + persons +
+                ", children=" + children +
                 '}';
-    }
-
-    public String getName() {
-        return name;
     }
 }

@@ -1,193 +1,150 @@
 package view;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import model.Child;
-import model.Institution;
-import model.Room;
+import javafx.scene.control.*;
+import javafx.scene.layout.FlowPane;
+import model.*;
 
 public class SimpleGUIController {
 
-    // ====== KOBLING TIL FXML ======
+    // ===== FXML =====
+    @FXML private FlowPane roomButtonPane;
+    @FXML private TextField newRoomField;
+    @FXML private Label roomTitleLabel;
+    @FXML private ListView<String> childrenListView;
+    @FXML private ListView<String> staffListView;
+    @FXML private ListView<String> agendaListView;
 
-    @FXML
-    private Label roomTitleLabel;
-
-    @FXML
-    private ListView<String> childrenListView;
-
-    // Bemanding – én liste pr. stue
-    @FXML
-    private ListView<String> staffListView;           // Rød stue
-    @FXML
-    private ListView<String> blueRoomStaffListView;   // Blå stue
-    @FXML
-    private ListView<String> yellowRoomStaffListView; // Gul stue
-    @FXML
-    private ListView<String> greenRoomStaffListView;  // Grøn stue
-
-    // Agenda (venstre side)
-    @FXML
-    private ListView<String> agendaListView;
-
-    // ====== ANDRE FELTER ======
-
+    // ===== MODEL =====
+    private Institution institution;
+    private Room currentRoom;
     private ViewHandler viewHandler;
 
-    private Institution institution;
-    private Room redRoom;
-    private Room blueRoom;
-    private Room yellowRoom;
-    private Room greenRoom;
+    public void init(ViewHandler handler) {
+        this.viewHandler = handler;
+        this.institution = handler.getInstitution();
+        this.currentRoom = handler.getCurrentRoom();
 
-    private Room currentRoom; // bruges til børneoversigten
+        if (institution.getRooms().length == 0) {
+            institution.addRoom("Rød stue");
+            handler.saveInstitution();
+        }
 
-    // Bliver kaldt fra ViewHandler, når FXML er loadet
-    public void init(ViewHandler viewHandler) {
-        this.viewHandler = viewHandler;
+        if (currentRoom == null) {
+            currentRoom = institution.getRooms()[0];
+            handler.setCurrentRoom(currentRoom);
+        }
 
-        // 1) Lav institutionen + rum
-        institution = new Institution("Børnehuset Solstrålen");
-
-        institution.addRoom("Rød stue");
-        institution.addRoom("Blå stue");
-        institution.addRoom("Gul stue");
-        institution.addRoom("Grøn stue");
-
-        Room[] rooms = institution.getRooms();
-        redRoom   = rooms[0];
-        blueRoom  = rooms[1];
-        yellowRoom = rooms[2];
-        greenRoom = rooms[3];
-
-        // 2) Bemanding
-        redRoom.addPerson("R. Karen");
-        redRoom.addPerson("Fm. Frede");
-
-        blueRoom.addPerson("Pæd. Anna");
-        blueRoom.addPerson("Medhj. Jonas");
-
-        yellowRoom.addPerson("Pæd. Maria");
-        yellowRoom.addPerson("Medhj. Lars");
-
-        greenRoom.addPerson("Pæd. Sofie");
-        greenRoom.addPerson("Medhj. Emil");
-
-        // 3) Børn i rød stue
-        currentRoom = redRoom;
-        currentRoom.addChild(new Child("Magne", "Dreng", 4));
-        currentRoom.addChild(new Child("Carla", "Pige", 3));
-        currentRoom.addChild(new Child("Sofia", "Pige", 5));
-
-        // 4) Fyld GUI
+        buildRoomButtons();
         updateRoomView();
-        updateStaffViews();
         updateAgenda();
     }
 
-    // ====== OPDATERING AF VIEW ======
+    // ===== STUE-KNAPPER =====
+    private void buildRoomButtons() {
+        roomButtonPane.getChildren().clear();
 
-    // Titel + børneliste for currentRoom
-    private void updateRoomView() {
+        for (Room r : institution.getRooms()) {
+            Button btn = new Button(r.getName());
+            btn.setPrefWidth(160);
+            btn.setPrefHeight(55);
+            btn.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: lightgray;");
+
+            btn.setOnAction(e -> {
+                currentRoom = r;
+                viewHandler.setCurrentRoom(r);
+                highlightActive(btn);
+                updateRoomView();
+                updateAgenda();
+            });
+
+            roomButtonPane.getChildren().add(btn);
+        }
+
+        if (!roomButtonPane.getChildren().isEmpty()) {
+            highlightActive((Button) roomButtonPane.getChildren().get(0));
+        }
+    }
+
+    private void highlightActive(Button active) {
+        for (var n : roomButtonPane.getChildren()) {
+            n.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: lightgray;");
+        }
+        active.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: lightgreen;");
+    }
+
+    // ===== CRUD STUER =====
+    @FXML
+    private void handleAddRoom() {
+        String name = newRoomField.getText().trim();
+        if (name.isEmpty()) return;
+
+        institution.addRoom(name);
+        viewHandler.saveInstitution();
+
+        newRoomField.clear();
+        buildRoomButtons();
+    }
+
+    @FXML
+    private void handleDeleteRoom() {
         if (currentRoom == null) return;
 
-        if (roomTitleLabel != null) {
-            roomTitleLabel.setText("Børneoversigt: " + currentRoom.getName());
-        }
+        institution.removeRoom(currentRoom);
+        currentRoom = institution.getRooms().length > 0 ? institution.getRooms()[0] : null;
+        viewHandler.setCurrentRoom(currentRoom);
 
-        if (childrenListView != null) {
-            childrenListView.getItems().clear();
-            if (currentRoom.getChildren() != null) {
-                for (Child c : currentRoom.getChildren()) {
-                    if (c != null) {
-                        childrenListView.getItems()
-                                .add(c.getName() + " (" + c.getAge() + " år)");
-                    }
-                }
-            }
+        viewHandler.saveInstitution();
+        buildRoomButtons();
+
+        if (currentRoom != null) {
+            updateRoomView();
+            updateAgenda();
         }
     }
 
-    // Bemanding i alle 4 stuer
-    private void updateStaffViews() {
-        // Rød
-        if (staffListView != null && redRoom != null && redRoom.getPersons() != null) {
-            staffListView.getItems().clear();
-            for (var p : redRoom.getPersons()) {
-                if (p != null) {
-                    staffListView.getItems().add(p.getName());
-                }
-            }
+    @FXML
+    private void handleRenameRoom() {
+        if (currentRoom == null) return;
+
+        String newName = newRoomField.getText().trim();
+        if (newName.isEmpty()) return;
+
+        currentRoom.setName(newName);
+        viewHandler.saveInstitution();
+
+        newRoomField.clear();
+        buildRoomButtons();
+        updateRoomView();
+    }
+
+    // ===== OPDATERING =====
+    private void updateRoomView() {
+        roomTitleLabel.setText("Børneoversigt: " + currentRoom.getName());
+
+        childrenListView.getItems().clear();
+        for (Child c : currentRoom.getChildren()) {
+            childrenListView.getItems().add(c.getName() + " (" + c.getAge() + " år)");
         }
 
-        // Blå
-        if (blueRoomStaffListView != null && blueRoom != null && blueRoom.getPersons() != null) {
-            blueRoomStaffListView.getItems().clear();
-            for (var p : blueRoom.getPersons()) {
-                if (p != null) {
-                    blueRoomStaffListView.getItems().add(p.getName());
-                }
-            }
-        }
-
-        // Gul
-        if (yellowRoomStaffListView != null && yellowRoom != null && yellowRoom.getPersons() != null) {
-            yellowRoomStaffListView.getItems().clear();
-            for (var p : yellowRoom.getPersons()) {
-                if (p != null) {
-                    yellowRoomStaffListView.getItems().add(p.getName());
-                }
-            }
-        }
-
-        // Grøn
-        if (greenRoomStaffListView != null && greenRoom != null && greenRoom.getPersons() != null) {
-            greenRoomStaffListView.getItems().clear();
-            for (var p : greenRoom.getPersons()) {
-                if (p != null) {
-                    greenRoomStaffListView.getItems().add(p.getName());
-                }
-            }
+        staffListView.getItems().clear();
+        for (Person p : currentRoom.getPersons()) {
+            staffListView.getItems().add(p.getName());
         }
     }
 
-    // Dummy-data til agendaen
     private void updateAgenda() {
-        if (agendaListView == null) return;
-
         agendaListView.getItems().clear();
-        agendaListView.getItems().add("08:00 - Morgenleg");
-        agendaListView.getItems().add("09:00 - Samling");
-        agendaListView.getItems().add("10:00 - Ude på legepladsen");
-        agendaListView.getItems().add("11:30 - Frokost");
-        agendaListView.getItems().add("12:30 - Middagslur / stille leg");
-    }
-
-    // ====== EVENT-HANDLERS FRA FXML ======
-
-    @FXML
-    private void handleWeatherButton() {
-        System.out.println(">>> handleWeatherButton CALLED");
-
-        if (viewHandler != null) {
-            viewHandler.openWeatherView();
-        } else {
-            System.out.println(">>> viewHandler is NULL");
+        if (currentRoom.getAgendaList() != null) {
+            currentRoom.getAgendaList().forEach(a ->
+                    agendaListView.getItems().add(a.getTime() + " - " + a.getEntry())
+            );
         }
     }
 
-    @FXML
-    private void handleInfoButton() {
-        if (viewHandler != null) {
-            viewHandler.openInfoView();
-        }
-    }
-
-    @FXML
-    private void handleCriticalButton() {
-        if (viewHandler != null) {
-            viewHandler.openCriticalView();
-        }
-    }
+    // ===== NAVIGATION =====
+    @FXML private void handleAgendaButton() { viewHandler.openAgendaView(); }
+    @FXML private void handleInfoButton() { viewHandler.openInfoView(); }
+    @FXML private void handleWeatherButton() { viewHandler.openWeatherView(); }
+    @FXML private void handleCriticalButton() { viewHandler.openCriticalView(); }
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="view.AgendaViewController"
+            prefWidth="800" prefHeight="600">
+
+    <top>
+        <Label text="Agenda for stuen"
+               BorderPane.alignment="CENTER"
+               style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
+    </top>
+
+    <center>
+        <VBox spacing="10" alignment="CENTER">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <ListView fx:id="agendaListView"
+                      prefWidth="600"
+                      prefHeight="250"/>
+
+            <HBox spacing="10">
+                <TextField fx:id="timeInputField"
+                           promptText="Tid (fx 09:00)"
+                           prefWidth="150"/>
+                <TextField fx:id="entryInputField"
+                           promptText="Aktivitet"
+                           prefWidth="350"/>
+            </HBox>
+
+            <HBox spacing="10">
+                <Button text="Tilføj" onAction="#handleAddAgenda"/>
+                <Button text="Redigér" onAction="#handleEditAgenda"/>
+                <Button text="Slet" onAction="#handleDeleteAgenda"/>
+                <Button text="Tilbage" onAction="#handleBackButton"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

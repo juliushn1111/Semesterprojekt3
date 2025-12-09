@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Institution;
+import model.Room;
 import persistence.ModelManager;
 
 import java.io.IOException;
@@ -12,56 +13,68 @@ public class ViewHandler {
 
     private Stage primaryStage;
 
-    // Hoved-view (SimpleGUI)
+    // Scener
     private Scene simpleGUIScene;
-    private SimpleGUIController simpleGUIController;
-
-    // Vejr-view
     private Scene weatherScene;
-    private WeatherViewController weatherController;
-
-    // Info-view
     private Scene infoScene;
-    private InfoViewController infoController;
-
-    // Critical-view
     private Scene criticalScene;
-    private CriticalViewController criticalController;
 
-    // ====== MODEL + PERSISTENCE ======
+    // Controllers
+    private SimpleGUIController simpleGUIController;
+    private WeatherViewController weatherViewController;
+    private InfoViewController infoViewController;
+    private CriticalViewController criticalViewController;
+
+    // Model + persistence
     private Institution institution;
     private ModelManager modelManager;
+
+    // Aktuelt valgt rum/stue
+    private Room currentRoom;
 
     public ViewHandler(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Børnehuset Solstrålen");
 
-        // Opret ModelManager og forsøg at loade data fra fil
+        // Persistence: prøv at loade institutionen fra fil
         modelManager = new ModelManager("institutionData.bin");
         institution = modelManager.load();
 
-        // Hvis der ikke fandtes en fil, laver vi en ny tom institution
         if (institution == null) {
+            // Første gang programmet kører
             institution = new Institution("Børnehuset Solstrålen");
+            // Sørg for mindst én stue
+            institution.addRoom("Rød stue");
         }
 
-        // Start på hovedskærmen
+        // Sæt currentRoom til første rum
+        Room[] rooms = institution.getRooms();
+        if (rooms.length > 0) {
+            currentRoom = rooms[0];
+        }
+
         openMainView();
     }
 
-    // Giver controllers adgang til modellen
+    // --------- MODEL-ACCESS ---------
     public Institution getInstitution() {
         return institution;
     }
 
-    // Kaldes fra controllers når der er ændret i modellen
     public void saveInstitution() {
         modelManager.save(institution);
     }
 
-    // ==========================
-    //  MAIN VIEW
-    // ==========================
+    // Aktuelt rum (bruges af SimpleGUI/InfoView)
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room room) {
+        this.currentRoom = room;
+    }
+
+    // --------- MAIN VIEW ---------
     public void openMainView() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -69,7 +82,7 @@ public class ViewHandler {
 
             simpleGUIScene = new Scene(loader.load());
             simpleGUIController = loader.getController();
-            simpleGUIController.init(this);   // giver ViewHandler videre
+            simpleGUIController.init(this);
 
             primaryStage.setScene(simpleGUIScene);
             primaryStage.show();
@@ -79,17 +92,15 @@ public class ViewHandler {
         }
     }
 
-    // ==========================
-    //  WEATHER VIEW
-    // ==========================
+    // --------- WEATHER VIEW ---------
     public void openWeatherView() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("WeatherView.fxml"));
 
             weatherScene = new Scene(loader.load());
-            weatherController = loader.getController();
-            weatherController.init(this);
+            weatherViewController = loader.getController();
+            weatherViewController.init(this);
 
             primaryStage.setScene(weatherScene);
             primaryStage.show();
@@ -99,17 +110,15 @@ public class ViewHandler {
         }
     }
 
-    // ==========================
-    //  INFO VIEW
-    // ==========================
+    // --------- INFO VIEW ---------
     public void openInfoView() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("InfoView.fxml"));
 
             infoScene = new Scene(loader.load());
-            infoController = loader.getController();
-            infoController.init(this);
+            infoViewController = loader.getController();
+            infoViewController.init(this);
 
             primaryStage.setScene(infoScene);
             primaryStage.show();
@@ -119,17 +128,15 @@ public class ViewHandler {
         }
     }
 
-    // ==========================
-    //  CRITICAL VIEW
-    // ==========================
+    // --------- CRITICAL VIEW ---------
     public void openCriticalView() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("CriticalView.fxml"));
 
             criticalScene = new Scene(loader.load());
-            criticalController = loader.getController();
-            criticalController.init(this);
+            criticalViewController = loader.getController();
+            criticalViewController.init(this);
 
             primaryStage.setScene(criticalScene);
             primaryStage.show();
@@ -142,4 +149,21 @@ public class ViewHandler {
     public Stage getPrimaryStage() {
         return primaryStage;
     }
+
+
+    public void openAgendaView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AgendaView.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            AgendaViewController controller = loader.getController();
+            controller.init(this, currentRoom);
+
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

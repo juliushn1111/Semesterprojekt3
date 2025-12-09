@@ -78,10 +78,10 @@ public class Institution implements Serializable {
         }
     }
 
-    public void setAgendaForRoom(String roomName, int time, String entry) {
+    public void addAgendaToRoom(String roomName, String time, String entry) {
         Room r = findRoom(roomName);
         if (r != null) {
-            r.setAgenda(time, entry);
+            r.addAgenda(time, entry);
         }
     }
 
@@ -114,4 +114,13 @@ public class Institution implements Serializable {
     public String toString() {
         return "Institution{name='" + name + "', antal rum=" + rooms.size() + "}";
     }
+
+    public void removeRoom(Room room) {
+        rooms.remove(room);
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }
