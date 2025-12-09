@@ -16,7 +16,7 @@ public class SimpleGUIController {
     @FXML private Label thursdayEventLabel;
     @FXML private Label fridayEventLabel;
 
-    @FXML private Label roomTitleLabel;
+    @FXML private Button childrenTitleButton;
     @FXML private ListView<String> childrenListView;
     @FXML private ListView<String> staffListView;
     @FXML private ListView<String> agendaListView;
@@ -28,14 +28,21 @@ public class SimpleGUIController {
     public void init(ViewHandler handler) {
         this.viewHandler = handler;
         this.institution = handler.getInstitution();
+        this.currentRoom = handler.getCurrentRoom();  // ✅ HENTER DEN AKTUELLE STUE
 
+        // ✅ Kun hvis der IKKE findes nogen stue endnu
         if (institution.getRooms().length == 0) {
             institution.addRoom("Rød stue");
             handler.saveInstitution();
+            handler.setCurrentRoom(institution.getRooms()[0]);
+            currentRoom = institution.getRooms()[0];
         }
 
-        currentRoom = institution.getRooms()[0];
-        handler.setCurrentRoom(currentRoom);
+        // ✅ Hvis currentRoom ikke er sat endnu (første opstart)
+        if (currentRoom == null) {
+            currentRoom = institution.getRooms()[0];
+            handler.setCurrentRoom(currentRoom);
+        }
 
         initRoomComboBox();
         initWeekdayComboBox();
@@ -44,12 +51,23 @@ public class SimpleGUIController {
         updateWeekView();
     }
 
+
+    // ===== INITIALISÉR STUE-DROPDOWN =====
     private void initRoomComboBox() {
         roomComboBox.getItems().clear();
+
+        // Fyld alle stuenavne ind
         for (Room r : institution.getRooms()) {
             roomComboBox.getItems().add(r.getName());
         }
-        roomComboBox.getSelectionModel().select(0);
+
+        // ✅ Vælg den AKTUELLE stue i dropdown
+        if (currentRoom != null) {
+            roomComboBox.getSelectionModel().select(currentRoom.getName());
+        } else if (!roomComboBox.getItems().isEmpty()) {
+            // Fallback ved første opstart
+            roomComboBox.getSelectionModel().select(0);
+        }
     }
 
     private void initWeekdayComboBox() {
@@ -106,6 +124,11 @@ public class SimpleGUIController {
         updateWeekView();
     }
 
+    @FXML
+    private void handleChildrenButton() {
+        viewHandler.openChildrenView();
+    }
+
     private void updateWeekView() {
         Calender[] w = currentRoom.getWeekPlan();
         mondayEventLabel.setText(w[0].getEvent());
@@ -116,16 +139,23 @@ public class SimpleGUIController {
     }
 
     private void updateRoomView() {
-        roomTitleLabel.setText("Børneoversigt: " + currentRoom.getName());
+        if (currentRoom == null) return;
+
+        // ===== BØRNEOVERSIGT (kun valgt stue) =====
+        childrenTitleButton.setText("Børneoversigt: " + currentRoom.getName());
 
         childrenListView.getItems().clear();
         for (Child c : currentRoom.getChildren()) {
-            childrenListView.getItems().add(c.getName());
+            childrenListView.getItems().add(c.getName() + " (" + c.getAge() + " år)");
         }
 
+        // ===== ✅ BEMANDING (ALLE STUER PÅ ÉN GANG) =====
         staffListView.getItems().clear();
-        for (Person p : currentRoom.getPersons()) {
-            staffListView.getItems().add(p.getName());
+
+        for (Room room : institution.getRooms()) {
+            for (Person p : room.getPersons()) {
+                staffListView.getItems().add(room.getName() + ": " + p.getName());
+            }
         }
     }
 

@@ -4,13 +4,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="800.0"
-            prefWidth="1280.0"
+<BorderPane prefHeight="800.0" prefWidth="1280.0"
             xmlns="http://javafx.com/javafx/20.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="view.SimpleGUIController">
 
-    <!-- ================== TOP ================== -->
+    <!-- ===== TOP: UGEOVERSIGT + STUEVÆLGER ===== -->
     <top>
         <VBox spacing="15" alignment="CENTER">
 
@@ -19,30 +18,25 @@
                 <padding>
                     <Insets top="15" bottom="5" left="20" right="20"/>
                 </padding>
-
                 <children>
                     <VBox alignment="TOP_CENTER">
-                        <Label style="-fx-font-size:20px;" text="Mandag"/>
+                        <Label text="Mandag" style="-fx-font-size:20px;"/>
                         <Label fx:id="mondayEventLabel"/>
                     </VBox>
-
                     <VBox alignment="TOP_CENTER">
-                        <Label style="-fx-font-size:20px;" text="Tirsdag"/>
+                        <Label text="Tirsdag" style="-fx-font-size:20px;"/>
                         <Label fx:id="tuesdayEventLabel"/>
                     </VBox>
-
                     <VBox alignment="TOP_CENTER">
-                        <Label style="-fx-font-size:20px;" text="Onsdag"/>
+                        <Label text="Onsdag" style="-fx-font-size:20px;"/>
                         <Label fx:id="wednesdayEventLabel"/>
                     </VBox>
-
                     <VBox alignment="TOP_CENTER">
-                        <Label style="-fx-font-size:20px;" text="Torsdag"/>
+                        <Label text="Torsdag" style="-fx-font-size:20px;"/>
                         <Label fx:id="thursdayEventLabel"/>
                     </VBox>
-
                     <VBox alignment="TOP_CENTER">
-                        <Label style="-fx-font-size:20px;" text="Fredag"/>
+                        <Label text="Fredag" style="-fx-font-size:20px;"/>
                         <Label fx:id="fridayEventLabel"/>
                     </VBox>
                 </children>
@@ -57,12 +51,10 @@
                               prefWidth="160"
                               onAction="#handleRoomChange"/>
 
-                    <Button text="+"
-                            prefWidth="35"
+                    <Button text="+" prefWidth="35"
                             onAction="#handleAddRoom"/>
 
-                    <Button text="-"
-                            prefWidth="35"
+                    <Button text="-" prefWidth="35"
                             onAction="#handleDeleteRoom"/>
 
                     <Label text="Dag:"/>
@@ -82,14 +74,15 @@
         </VBox>
     </top>
 
-    <!-- ================== VENSTRE: AGENDA ================== -->
+    <!-- ===== VENSTRE: AGENDA ===== -->
     <left>
-        <VBox spacing="10.0">
+        <VBox spacing="10">
             <padding>
                 <Insets bottom="20" left="20" right="20" top="20"/>
             </padding>
-
             <children>
+
+                <!-- KLIKBAR AGENDA-TEKST -->
                 <Button text="AGENDA"
                         style="-fx-font-size: 24px; -fx-font-weight: bold;"
                         onAction="#handleAgendaButton"/>
@@ -97,44 +90,46 @@
                 <ListView fx:id="agendaListView"
                           prefHeight="600"
                           prefWidth="200"/>
+
             </children>
         </VBox>
     </left>
 
-    <!-- ================== CENTER ================== -->
+    <!-- ===== CENTER ===== -->
     <center>
         <VBox spacing="25">
             <padding>
                 <Insets bottom="20" left="20" right="20" top="10"/>
             </padding>
 
-            <!-- BEMANDING -->
+            <!-- ✅ KLIKBAR BEMANDING-TEKST -->
             <VBox spacing="10">
-                <children>
-                    <Label style="-fx-font-size: 22px; -fx-font-weight: bold;"
-                           text="BEMANDING LIGE NU"/>
-                    <ListView fx:id="staffListView"
-                              prefHeight="150"
-                              prefWidth="250"/>
-                </children>
+                <Button text="BEMANDING LIGE NU"
+                        style="-fx-font-size: 22px; -fx-font-weight: bold;"
+                        onAction="#handleStaffButton"/>
+
+                <ListView fx:id="staffListView"
+                          prefHeight="150"
+                          prefWidth="350"/>
             </VBox>
 
-            <!-- BØRN -->
+            <!-- BØRNEOVERSIGT (klikbar titel som knap) -->
             <VBox spacing="10">
-                <children>
-                    <Label fx:id="roomTitleLabel"
-                           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
-                    <ListView fx:id="childrenListView"
-                              prefHeight="250"
-                              prefWidth="750"/>
-                </children>
+                <Button fx:id="childrenTitleButton"
+                        text="Børneoversigt"
+                        style="-fx-font-size: 22px; -fx-font-weight: bold;"
+                        onAction="#handleChildrenButton"/>
+
+                <ListView fx:id="childrenListView"
+                          prefHeight="250"
+                          prefWidth="750"/>
             </VBox>
 
         </VBox>
     </center>
 
-    <!-- ================== HØJRE ================== -->
+    <!-- ===== HØJRE: IKONER (KUN 3) ===== -->
     <right>
         <VBox spacing="30">
             <padding>
@@ -149,13 +144,6 @@
                         prefWidth="140"
                         style="-fx-font-size: 48px;"
                         text="☀"/>
-
-                <!-- PERSONALE -->
-                <Button onAction="#handleStaffButton"
-                        prefHeight="140"
-                        prefWidth="140"
-                        style="-fx-font-size: 48px;"
-                        text="👥"/>
 
                 <!-- CRITICAL -->
                 <Button onAction="#handleCriticalButton"

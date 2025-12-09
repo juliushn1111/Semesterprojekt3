@@ -73,6 +73,8 @@ public class ViewHandler {
     public void openInfoView() { openView("/view/InfoView.fxml"); }
     public void openCriticalView() { openView("/view/CriticalView.fxml"); }
     public void openWeatherView() { openView("/view/WeatherView.fxml"); }
+    public void openChildrenView() {openView("/view/ChildrenView.fxml");}
+
 
     private void openView(String path) {
         try {

@@ -4,38 +4,45 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefWidth="600" prefHeight="500"
-            xmlns="http://javafx.com/javafx/20.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="view.StaffViewController">
+<VBox spacing="15"
+      alignment="CENTER"
+      xmlns="http://javafx.com/javafx/20.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="view.StaffViewController">
 
-    <top>
-        <Label text="Redigér bemanding"
-               style="-fx-font-size: 22px; -fx-font-weight: bold;"
-               BorderPane.alignment="CENTER"/>
-    </top>
+    <padding>
+        <Insets top="20" bottom="20" left="20" right="20"/>
+    </padding>
 
-    <center>
-        <VBox spacing="10" padding="20">
+    <!-- OVERSKRIFT -->
+    <Label text="Redigér bemanding"
+           style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
 
-            <ListView fx:id="staffListView" prefHeight="300"/>
+    <!-- TILFØJ PERSONALE -->
+    <HBox spacing="10">
+        <TextField fx:id="nameField"
+                   promptText="Navn"
+                   prefWidth="200"/>
 
-            <TextField fx:id="staffInputField"
-                       promptText="Navn på personale"/>
+        <ComboBox fx:id="roomComboBox"
+                  prefWidth="200"/>
 
-            <HBox spacing="10">
-                <Button text="Tilføj" onAction="#handleAddStaff"/>
-                <Button text="Redigér" onAction="#handleEditStaff"/>
-                <Button text="Slet" onAction="#handleDeleteStaff"/>
-            </HBox>
+        <Button text="Tilføj"
+                onAction="#handleAddStaff"/>
+    </HBox>
 
-        </VBox>
-    </center>
+    <!-- LISTE OVER PERSONALE -->
+    <ListView fx:id="staffListView"
+              prefWidth="500"
+              prefHeight="300"/>
 
-    <bottom>
+    <!-- SLET + TILBAGE -->
+    <HBox spacing="20">
+        <Button text="Slet valgt"
+                onAction="#handleDeleteStaff"/>
+
         <Button text="Tilbage"
-                onAction="#handleBackButton"
-                BorderPane.alignment="CENTER"/>
-    </bottom>
+                onAction="#handleBackButton"/>
+    </HBox>
 
-</BorderPane>
+</VBox>

@@ -1,94 +1,95 @@
 package view;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import model.Institution;
-import model.Person;
-import model.Room;
+import javafx.scene.control.*;
+import model.*;
 
 public class StaffViewController {
 
+    @FXML private TextField nameField;
+    @FXML private ComboBox<String> roomComboBox;
     @FXML private ListView<String> staffListView;
-    @FXML private TextField staffInputField;
 
     private ViewHandler viewHandler;
     private Institution institution;
-    private Room currentRoom;
 
     private int selectedIndex = -1;
 
+    // ===== INIT =====
     public void init(ViewHandler handler) {
         this.viewHandler = handler;
         this.institution = handler.getInstitution();
-        this.currentRoom = handler.getCurrentRoom();
+
+        initRoomComboBox();
+        updateStaffList();
 
         staffListView.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> {
             selectedIndex = newVal.intValue();
-            loadSelectedIntoField();
         });
-
-        updateStaffView();
     }
 
-    private void updateStaffView() {
-        staffListView.getItems().clear();
+    // ===== FYLD STUER I DROPDOWN =====
+    private void initRoomComboBox() {
+        roomComboBox.getItems().clear();
 
-        if (currentRoom == null) return;
+        for (Room r : institution.getRooms()) {
+            roomComboBox.getItems().add(r.getName());
+        }
 
-        for (Person p : currentRoom.getPersons()) {
-            staffListView.getItems().add(p.getName());
+        if (!roomComboBox.getItems().isEmpty()) {
+            roomComboBox.getSelectionModel().selectFirst();
         }
     }
 
-    @FXML
-    private void handleAddStaff() {
-        if (currentRoom == null) return;
+    // ===== OPDATER PERSONALELISTE (ALLE STUER) =====
+    private void updateStaffList() {
+        staffListView.getItems().clear();
 
-        String name = staffInputField.getText().trim();
-        if (name.isEmpty()) return;
-
-        currentRoom.addPerson(name);
-        viewHandler.saveInstitution();
-
-        staffInputField.clear();
-        updateStaffView();
+        for (Room r : institution.getRooms()) {
+            for (Person p : r.getPersons()) {
+                staffListView.getItems().add(r.getName() + ": " + p.getName());
+            }
+        }
     }
 
+    // ===== TILFØJ PERSONALE =====
+    @FXML
+    private void handleAddStaff() {
+        String name = nameField.getText().trim();
+        String roomName = roomComboBox.getValue();
+
+        if (name.isEmpty() || roomName == null) return;
+
+        Room room = institution.findRoom(roomName);
+        room.addPerson(name);
+
+        viewHandler.saveInstitution();
+
+        nameField.clear();
+        updateStaffList();
+    }
+
+    // ===== SLET PERSONALE =====
     @FXML
     private void handleDeleteStaff() {
-        if (currentRoom == null || selectedIndex < 0) return;
+        if (selectedIndex < 0) return;
 
-        String name = staffListView.getItems().get(selectedIndex);
-        currentRoom.removePerson(name);
+        String line = staffListView.getItems().get(selectedIndex);
+        String[] parts = line.split(": ");
+
+        String roomName = parts[0];
+        String personName = parts[1];
+
+        Room room = institution.findRoom(roomName);
+        room.removePerson(personName);
+
         viewHandler.saveInstitution();
 
         selectedIndex = -1;
-        staffInputField.clear();
-        updateStaffView();
+        updateStaffList();
     }
 
-    @FXML
-    private void handleEditStaff() {
-        if (currentRoom == null || selectedIndex < 0) return;
-
-        String newName = staffInputField.getText().trim();
-        if (newName.isEmpty()) return;
-
-        String oldName = staffListView.getItems().get(selectedIndex);
-        currentRoom.removePerson(oldName);
-        currentRoom.addPerson(newName);
-
-        viewHandler.saveInstitution();
-        staffInputField.clear();
-        updateStaffView();
-    }
-
-    private void loadSelectedIntoField() {
-        if (selectedIndex < 0) return;
-        staffInputField.setText(staffListView.getItems().get(selectedIndex));
-    }
-
+    // ===== TILBAGE =====
     @FXML
     private void handleBackButton() {
         viewHandler.openMainView();
