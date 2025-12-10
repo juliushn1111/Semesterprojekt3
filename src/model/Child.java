@@ -10,13 +10,12 @@ public class Child extends Person implements Serializable
     // Barnets alder i hele år.
     private int age;
     // Constructor: kalder super for at sætte navnet
-    // og initialiserer Child-specifikke felter.
-    // setAge() bruges for at genbruge valideringen.
+
     public Child(String name, String sex, int age){
         super(name);
         this.sex = sex;
         this.age = age;
-        setAge(age); // bruger samme validering
+        setAge(age);
     }
     public String getSex()
     {
@@ -31,7 +30,7 @@ public class Child extends Person implements Serializable
         this.sex = sex;
     }
     // Setter for alder.
-    // Indeholder simpel validering for at sikre gyldige værdier.
+
     public void setAge(int age)
     {
         if (age < 0)
@@ -40,8 +39,7 @@ public class Child extends Person implements Serializable
         }
         this.age = age;
     }
-    // toString: giver en letforståelig tekstrepræsentation
-    // af objektet til debugging/logging.
+
     @Override public String toString()
     {
         return "Child{" +
@@ -50,8 +48,7 @@ public class Child extends Person implements Serializable
                 ", age=" + age +
                 '}';
     }
-    // equals: to Child-objekter betragtes som ens hvis både Person-delen
-    // (via super.equals) og Child-felterne matcher.
+
     @Override public boolean equals(Object o)
     {
         if (this == o)
@@ -64,8 +61,7 @@ public class Child extends Person implements Serializable
         // sammenligner Child-specifikke felter
         return age == child.age && Objects.equals(sex, child.sex);
     }
-    // hashCode: matcher equals. Kombinerer Person's hashCode
-    // med Child-felterne, så objektet fungerer korrekt i hash-baserede datastrukturer.
+
     @Override public int hashCode()
     {
         return Objects.hash(super.hashCode(), sex, age);
