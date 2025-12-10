@@ -16,13 +16,13 @@ public class ChildrenViewController {
     private ViewHandler viewHandler;
     private Room currentRoom;
 
-    // Bliver kaldt af ViewHandler.openView(...)
+    // INIT
     public void init(ViewHandler handler) {
         this.viewHandler = handler;
         this.currentRoom = handler.getCurrentRoom();
 
         if (currentRoom != null) {
-            roomLabel.setText("Børneoversigt – " + currentRoom.getName());
+            roomLabel.setText("Child overview – " + currentRoom.getName());
         }
         updateChildrenList();
     }
@@ -33,7 +33,7 @@ public class ChildrenViewController {
         if (currentRoom == null) return;
 
         for (Child c : currentRoom.getChildren()) {
-            String line = c.getName() + " (" + c.getAge() + " år, " + c.getSex() + ")";
+            String line = c.getName() + " (" + c.getAge() + " Years old, " + c.getSex() + ")";
             childrenListView.getItems().add(line);
         }
     }

@@ -10,7 +10,7 @@ public class Main extends Application {
 
         ViewHandler viewHandler = new ViewHandler(stage);
 
-        // ✅ VIGTIG RETTELSE:
+
         viewHandler.openMainView();
 
         stage.setTitle("Semesterprojekt");

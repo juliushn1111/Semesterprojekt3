@@ -11,7 +11,7 @@
             prefWidth="800.0" prefHeight="600.0">
 
     <top>
-        <Label text="Vejroversigt"
+        <Label text="Weather Info"
                BorderPane.alignment="CENTER"
                style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
     </top>
@@ -22,17 +22,17 @@
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
             <children>
-                <Label text="Mandag: 5° / 10°  - Sol og skyer"/>
-                <Label text="Tirsdag: 7° / 11° - Regnbyger"/>
-                <Label text="Onsdag: 4° / 9°  - Klart vejr"/>
-                <Label text="Torsdag: 6° / 12° - Let overskyet"/>
-                <Label text="Fredag: 8° / 13° - Sol"/>
+                <Label text="Monday: 5° / 10°  - Sun and clouds (Wear coveralls)"/>
+                <Label text="Tuesday: 7° / 11° - Rain (Wear Rainclothes)"/>
+                <Label text="Wednesday: 4° / 9°  - Clear weather (Wear coveralls and gloves)"/>
+                <Label text="Thursday: 6° / 12° - Slightly cloudy (Wear coveralls)"/>
+                <Label text="Friday: 12° / 18° - Sun (Wear lightjacket)"/>
             </children>
         </VBox>
     </center>
 
     <bottom>
-        <Button text="Tilbage"
+        <Button text="Back"
                 onAction="#handleBackButton"
                 prefWidth="120" prefHeight="40"
                 BorderPane.alignment="CENTER"/>

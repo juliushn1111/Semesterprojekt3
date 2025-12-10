@@ -36,7 +36,7 @@ public class ViewHandler {
         this.currentRoom = room;
     }
 
-    // ===== HOVEDSKÆRM =====
+    // HOVEDSKÆRM
     public void openMainView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SimpleGUI.fxml"));
@@ -52,7 +52,7 @@ public class ViewHandler {
         }
     }
 
-    // ===== PERSONALE =====
+    //  PERSONALE
     public void openStaffView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/StaffView.fxml"));

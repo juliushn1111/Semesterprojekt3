@@ -9,29 +9,29 @@
             fx:controller="view.InfoViewController"
             prefWidth="800" prefHeight="600">
 
-    <!-- TOP -->
+
     <top>
-        <Label text="Information for stuen"
+        <Label text="Information for the room"
                BorderPane.alignment="CENTER"
                style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
     </top>
 
-    <!-- CENTER -->
+
     <center>
         <VBox spacing="10" alignment="CENTER">
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
 
-            <!-- LISTE -->
+
             <ListView fx:id="infoListView"
                       prefWidth="600"
                       prefHeight="250"/>
 
-            <!-- INPUT FELTER -->
+
             <HBox spacing="10" alignment="CENTER">
                 <TextField fx:id="nameInputField"
-                           promptText="Navn (fx pædagog)"
+                           promptText="Name (fx Childcare worker)"
                            prefWidth="200"/>
 
                 <TextField fx:id="infoInputField"
@@ -39,12 +39,12 @@
                            prefWidth="350"/>
             </HBox>
 
-            <!-- KNAPPER -->
+
             <HBox spacing="10" alignment="CENTER">
-                <Button text="Tilføj" onAction="#handleAddInfo" prefWidth="120"/>
-                <Button text="Redigér" onAction="#handleEditInfo" prefWidth="120"/>
-                <Button text="Slet" onAction="#handleDeleteInfo" prefWidth="120"/>
-                <Button text="Tilbage" onAction="#handleBackButton" prefWidth="120"/>
+                <Button text="Add" onAction="#handleAddInfo" prefWidth="120"/>
+                <Button text="Edit" onAction="#handleEditInfo" prefWidth="120"/>
+                <Button text="Delete" onAction="#handleDeleteInfo" prefWidth="120"/>
+                <Button text="Back" onAction="#handleBackButton" prefWidth="120"/>
             </HBox>
         </VBox>
     </center>

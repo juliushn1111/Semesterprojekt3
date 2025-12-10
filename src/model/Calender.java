@@ -26,7 +26,7 @@ public class Calender implements Serializable {
     public void remove(String event){
         if ( this.event != null && this.event.equals(event)){
             this.event = null;
-            // Fjerner kun eventet, hvis navent stemmer overens.
+            // Fjerner kun eventet hvis navent stemmer overens.
         }
     }
     public String toString(){

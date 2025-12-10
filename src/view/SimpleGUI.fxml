@@ -9,44 +9,44 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="view.SimpleGUIController">
 
-    <!-- ===== TOP: UGEOVERSIGT + STUEVÆLGER ===== -->
+
     <top>
         <VBox spacing="15" alignment="CENTER">
 
-            <!-- UGEOVERSIGT -->
+
             <HBox alignment="CENTER" spacing="40">
                 <padding>
                     <Insets top="15" bottom="5" left="20" right="20"/>
                 </padding>
                 <children>
                     <VBox alignment="TOP_CENTER">
-                        <Label text="Mandag" style="-fx-font-size:20px;"/>
+                        <Label text="Monday" style="-fx-font-size:20px;"/>
                         <Label fx:id="mondayEventLabel"/>
                     </VBox>
                     <VBox alignment="TOP_CENTER">
-                        <Label text="Tirsdag" style="-fx-font-size:20px;"/>
+                        <Label text="Tuesday" style="-fx-font-size:20px;"/>
                         <Label fx:id="tuesdayEventLabel"/>
                     </VBox>
                     <VBox alignment="TOP_CENTER">
-                        <Label text="Onsdag" style="-fx-font-size:20px;"/>
+                        <Label text="Wednesday" style="-fx-font-size:20px;"/>
                         <Label fx:id="wednesdayEventLabel"/>
                     </VBox>
                     <VBox alignment="TOP_CENTER">
-                        <Label text="Torsdag" style="-fx-font-size:20px;"/>
+                        <Label text="Thursday" style="-fx-font-size:20px;"/>
                         <Label fx:id="thursdayEventLabel"/>
                     </VBox>
                     <VBox alignment="TOP_CENTER">
-                        <Label text="Fredag" style="-fx-font-size:20px;"/>
+                        <Label text="Friday" style="-fx-font-size:20px;"/>
                         <Label fx:id="fridayEventLabel"/>
                     </VBox>
                 </children>
             </HBox>
 
-            <!-- STUE + DAG REDIGERING -->
+
             <HBox alignment="CENTER" spacing="10">
                 <children>
 
-                    <Label text="Stue:"/>
+                    <Label text="Room:"/>
                     <ComboBox fx:id="roomComboBox"
                               prefWidth="160"
                               onAction="#handleRoomChange"/>
@@ -57,15 +57,15 @@
                     <Button text="-" prefWidth="35"
                             onAction="#handleDeleteRoom"/>
 
-                    <Label text="Dag:"/>
+                    <Label text="Day:"/>
                     <ComboBox fx:id="weekdayComboBox"
                               prefWidth="120"/>
 
                     <TextField fx:id="weekdayTextField"
-                               promptText="Aktivitet på valgt dag"
+                               promptText="Activity"
                                prefWidth="250"/>
 
-                    <Button text="Gem dag"
+                    <Button text="Save"
                             onAction="#handleSaveWeekday"/>
 
                 </children>
@@ -74,7 +74,7 @@
         </VBox>
     </top>
 
-    <!-- ===== VENSTRE: AGENDA ===== -->
+
     <left>
         <VBox spacing="10">
             <padding>
@@ -82,7 +82,7 @@
             </padding>
             <children>
 
-                <!-- KLIKBAR AGENDA-TEKST -->
+
                 <Button text="AGENDA"
                         style="-fx-font-size: 24px; -fx-font-weight: bold;"
                         onAction="#handleAgendaButton"/>
@@ -95,16 +95,15 @@
         </VBox>
     </left>
 
-    <!-- ===== CENTER ===== -->
+
     <center>
         <VBox spacing="25">
             <padding>
                 <Insets bottom="20" left="20" right="20" top="10"/>
             </padding>
 
-            <!-- ✅ KLIKBAR BEMANDING-TEKST -->
             <VBox spacing="10">
-                <Button text="BEMANDING LIGE NU"
+                <Button text="Staffing right now"
                         style="-fx-font-size: 22px; -fx-font-weight: bold;"
                         onAction="#handleStaffButton"/>
 
@@ -113,11 +112,10 @@
                           prefWidth="350"/>
             </VBox>
 
-            <!-- BØRNEOVERSIGT (klikbar titel som knap) -->
             <VBox spacing="10">
 
                 <Button fx:id="childrenTitleButton"
-                        text="Børneoversigt"
+                        text="Child overview"
                         style="-fx-font-size: 22px; -fx-font-weight: bold;"
                         onAction="#handleChildrenButton"/>
 
@@ -129,7 +127,6 @@
         </VBox>
     </center>
 
-    <!-- ===== HØJRE: IKONER (KUN 3) ===== -->
     <right>
         <VBox spacing="30">
             <padding>
@@ -138,21 +135,18 @@
 
             <children>
 
-                <!-- VEJR -->
                 <Button onAction="#handleWeatherButton"
                         prefHeight="140"
                         prefWidth="140"
                         style="-fx-font-size: 48px;"
                         text="☀"/>
 
-                <!-- CRITICAL -->
                 <Button onAction="#handleCriticalButton"
                         prefHeight="140"
                         prefWidth="140"
                         style="-fx-font-size: 48px; -fx-text-fill: red;"
                         text="!"/>
 
-                <!-- INFO -->
                 <Button onAction="#handleInfoButton"
                         prefHeight="140"
                         prefWidth="140"

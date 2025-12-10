@@ -14,39 +14,38 @@
                 <Insets top="20" bottom="20" left="20" right="20"/>
             </padding>
 
-            <!-- Titel med stuens navn -->
+
             <Label fx:id="roomLabel"
                    style="-fx-font-size: 24px; -fx-font-weight: bold;"
-                   text="Børneoversigt"/>
+                   text="Child overview"/>
 
-            <!-- Input til nyt barn -->
+
             <HBox spacing="10" alignment="CENTER">
                 <TextField fx:id="nameField"
-                           promptText="Navn"
+                           promptText="Name"
                            prefWidth="200"/>
 
                 <TextField fx:id="sexField"
-                           promptText="Køn (fx Dreng/Pige)"
+                           promptText="Sex (fx Boy/Girl)"
                            prefWidth="150"/>
 
                 <TextField fx:id="ageField"
-                           promptText="Alder (år)"
+                           promptText="Age (Year)"
                            prefWidth="100"/>
             </HBox>
 
-            <!-- Knapper -->
+
             <HBox spacing="10" alignment="CENTER">
-                <Button text="Tilføj barn"
+                <Button text="Add Child"
                         onAction="#handleAddChild"/>
 
-                <Button text="Slet valgt barn"
+                <Button text="Delete child"
                         onAction="#handleDeleteChild"/>
 
-                <Button text="Tilbage"
+                <Button text="Back"
                         onAction="#handleBackButton"/>
             </HBox>
 
-            <!-- Liste med børn på denne stue -->
             <ListView fx:id="childrenListView"
                       prefWidth="550"
                       prefHeight="350"/>

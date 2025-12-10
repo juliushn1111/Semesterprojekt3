@@ -47,8 +47,7 @@ public class Personell extends Person
                 ", title='" + title + '\'' +      // eget felt
                 '}';
     }
-    // equals: to Personell-objekter betragtes som ens hvis både Person-delen
-    // (via super.equals) og Personell-felterne matcher.
+
     @Override public boolean equals(Object o)
     {
         if (this == o)

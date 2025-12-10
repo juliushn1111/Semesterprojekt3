@@ -27,7 +27,7 @@ public class AgendaViewController {
 
         if (time.isEmpty() || entry.isEmpty()) return;
 
-        // ✅ VIGTIG FIX: vi sender STRING – ikke Agenda-objekt
+
         currentRoom.addAgenda(time, entry);
         viewHandler.saveInstitution();
 

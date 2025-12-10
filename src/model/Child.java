@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Child extends Person implements Serializable
 {
-    // Barnets køn (f.eks. "male", "female", "other").
+    // Barnets køn (f.eks. "Boy", "Girl").
     private String sex;
     // Barnets alder i hele år.
     private int age;

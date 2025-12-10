@@ -13,14 +13,13 @@
             fx:controller="view.CriticalViewController"
             prefWidth="800.0" prefHeight="600.0">
 
-    <!-- TOP: Titel -->
+
     <top>
-        <Label text="Kritisk Information"
+        <Label text="Critical Information"
                BorderPane.alignment="CENTER"
                style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: red;"/>
     </top>
 
-    <!-- CENTER: Liste med kritisk info -->
     <center>
         <VBox spacing="10" alignment="CENTER">
             <padding>
@@ -28,29 +27,27 @@
             </padding>
             <children>
 
-                <!-- Liste -->
+
                 <ListView fx:id="criticalListView"
                           prefHeight="350"
                           prefWidth="600"/>
 
-                <!-- Inputfelt -->
                 <HBox spacing="10">
                     <children>
                         <TextField fx:id="criticalInputField"
-                                   promptText="Skriv kritisk info..."
+                                   promptText="Type critical info..."
                                    prefWidth="400"/>
-                        <Button text="Tilføj"
+                        <Button text="Add"
                                 onAction="#handleAddCritical"/>
                     </children>
                 </HBox>
 
-                <!-- Knapper til redigering -->
                 <HBox spacing="10">
                     <children>
-                        <Button text="Gem ændring"
+                        <Button text="Save change"
                                 onAction="#handleEditCritical"/>
 
-                        <Button text="Slet valgt"
+                        <Button text="Delete"
                                 onAction="#handleDeleteCritical"/>
                     </children>
                 </HBox>
@@ -59,9 +56,8 @@
         </VBox>
     </center>
 
-    <!-- BUND: Tilbage-knap -->
     <bottom>
-        <Button text="Tilbage"
+        <Button text="Back"
                 onAction="#handleBackButton"
                 prefWidth="120" prefHeight="40"
                 BorderPane.alignment="CENTER"/>

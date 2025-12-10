@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Person implements Serializable  // ← VIGTIGT!
+public class Person implements Serializable
 {
     private String name;
 

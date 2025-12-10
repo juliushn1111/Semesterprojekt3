@@ -10,7 +10,7 @@ public class Institution implements Serializable {
     // RUM
     private ArrayList<Room> rooms;
 
-    // CRITICAL INFO
+    //KRITISK INFO
     private ArrayList<CriticalInfo> criticalInfoList;
 
     public Institution(String name) {
@@ -23,9 +23,9 @@ public class Institution implements Serializable {
         return name;
     }
 
-    // =========================
-    //        ROOMS
-    // =========================
+
+    //RUM
+
 
     // Tilføj et rum
     public void addRoom(String roomName) {
@@ -62,7 +62,7 @@ public class Institution implements Serializable {
         return null; // hvis rummet ikke findes
     }
 
-    // ---------- VIDERE TIL ROOM ----------
+    //VIDERE TIL ROOM
 
     public void addPersonToRoom(String roomName, String personName) {
         Room r = findRoom(roomName);
@@ -92,10 +92,8 @@ public class Institution implements Serializable {
         }
     }
 
-    // =========================
-    //    CRITICAL INFO
-    // =========================
 
+    //CRITICAL INFO
     public void addCriticalInfo(CriticalInfo info) {
         criticalInfoList.add(info);
     }

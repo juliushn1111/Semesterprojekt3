@@ -12,7 +12,6 @@ public class Information implements Serializable {
         this.name = name;
     }
 
-    // ---------- GETTERS ----------
     public String getInfo() {
         return info;
     }
@@ -21,7 +20,7 @@ public class Information implements Serializable {
         return name;
     }
 
-    // ---------- SETTERS ----------
+
     public void setInfo(String info) {
         this.info = info;
     }
@@ -30,7 +29,7 @@ public class Information implements Serializable {
         this.name = name;
     }
 
-    // ---------- TOSTRING ----------
+
     @Override
     public String toString() {
         return "Information{" +

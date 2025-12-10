@@ -8,7 +8,7 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="view.AgendaViewController">
 
-    <!-- CENTER -->
+
     <center>
         <VBox spacing="15" alignment="CENTER">
             <padding>
@@ -18,30 +18,30 @@
             <Label text="AGENDA"
                    style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
 
-            <!-- INPUT FELTER -->
+
             <HBox spacing="10" alignment="CENTER">
                 <TextField fx:id="timeField"
-                           promptText="Tid (fx 09:00)"
+                           promptText="Time (fx 09:00)"
                            prefWidth="150"/>
 
                 <TextField fx:id="entryInputField"
-                           promptText="Aktivitet"
+                           promptText="Activity"
                            prefWidth="350"/>
             </HBox>
 
-            <!-- KNAPPER -->
+
             <HBox spacing="10" alignment="CENTER">
-                <Button text="Tilføj"
+                <Button text="Add"
                         onAction="#handleAddAgenda"/>
 
-                <Button text="Slet valgt"
+                <Button text="Delete"
                         onAction="#handleDeleteAgenda"/>
 
-                <Button text="Tilbage"
+                <Button text="Back"
                         onAction="#handleBackButton"/>
             </HBox>
 
-            <!-- LISTE -->
+
             <ListView fx:id="agendaListView"
                       prefWidth="550"
                       prefHeight="350"/>

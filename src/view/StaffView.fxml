@@ -14,34 +14,34 @@
         <Insets top="20" bottom="20" left="20" right="20"/>
     </padding>
 
-    <!-- OVERSKRIFT -->
-    <Label text="Redigér bemanding"
+
+    <Label text="Change Staff"
            style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
 
-    <!-- TILFØJ PERSONALE -->
+
     <HBox spacing="10">
         <TextField fx:id="nameField"
-                   promptText="Navn"
+                   promptText="Name"
                    prefWidth="200"/>
 
         <ComboBox fx:id="roomComboBox"
                   prefWidth="200"/>
 
-        <Button text="Tilføj"
+        <Button text="Add"
                 onAction="#handleAddStaff"/>
     </HBox>
 
-    <!-- LISTE OVER PERSONALE -->
+
     <ListView fx:id="staffListView"
               prefWidth="500"
               prefHeight="300"/>
 
-    <!-- SLET + TILBAGE -->
+
     <HBox spacing="20">
-        <Button text="Slet valgt"
+        <Button text="Delete"
                 onAction="#handleDeleteStaff"/>
 
-        <Button text="Tilbage"
+        <Button text="Back"
                 onAction="#handleBackButton"/>
     </HBox>
 

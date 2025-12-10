@@ -15,7 +15,7 @@ public class StaffViewController {
 
     private int selectedIndex = -1;
 
-    // ===== INIT =====
+    // INIT
     public void init(ViewHandler handler) {
         this.viewHandler = handler;
         this.institution = handler.getInstitution();
@@ -28,7 +28,7 @@ public class StaffViewController {
         });
     }
 
-    // ===== FYLD STUER I DROPDOWN =====
+    // FYLD STUER I DROPDOWN
     private void initRoomComboBox() {
         roomComboBox.getItems().clear();
 
@@ -41,7 +41,7 @@ public class StaffViewController {
         }
     }
 
-    // ===== OPDATER PERSONALELISTE (ALLE STUER) =====
+    // OPDATER PERSONALELISTE (ALLE STUER)
     private void updateStaffList() {
         staffListView.getItems().clear();
 
@@ -52,7 +52,7 @@ public class StaffViewController {
         }
     }
 
-    // ===== TILFØJ PERSONALE =====
+    // TILFØJ PERSONALE
     @FXML
     private void handleAddStaff() {
         String name = nameField.getText().trim();
@@ -69,7 +69,7 @@ public class StaffViewController {
         updateStaffList();
     }
 
-    // ===== SLET PERSONALE =====
+    // SLET PERSONALE
     @FXML
     private void handleDeleteStaff() {
         if (selectedIndex < 0) return;
@@ -89,7 +89,7 @@ public class StaffViewController {
         updateStaffList();
     }
 
-    // ===== TILBAGE =====
+    // TILBAGE
     @FXML
     private void handleBackButton() {
         viewHandler.openMainView();

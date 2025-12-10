@@ -10,10 +10,10 @@ public class Room implements Serializable {
     // Informationer for denne stue
     private ArrayList<Information> informationList;
 
-    // Agenda for denne stue (liste)
+    // Agenda for denne stue
     private ArrayList<Agenda> agendaList;
 
-    // ✅ UGEPLAN (Mandag–Fredag) PR. STUE
+    // UGEPLAN (Mandag–Fredag) PR. STUE
     private Calender[] weekPlan;
 
     // Personale-liste
@@ -30,7 +30,7 @@ public class Room implements Serializable {
         this.persons = new ArrayList<>();
         this.children = new ArrayList<>();
 
-        // ✅ INITIALISER UGEPLAN
+        // UGEPLAN
         String[] days = {"Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag"};
         weekPlan = new Calender[5];
         for (int i = 0; i < 5; i++) {
@@ -38,10 +38,8 @@ public class Room implements Serializable {
         }
     }
 
-    // =========================================================
-    //                      PERSONALE
-    // =========================================================
 
+    //PERSONALE
     public void addPerson(String name) {
         persons.add(new Person(name));
     }
@@ -54,10 +52,8 @@ public class Room implements Serializable {
         return persons.toArray(new Person[0]);
     }
 
-    // =========================================================
-    //                      INFORMATION
-    // =========================================================
 
+    //INFORMATION
     public void addInformation(String info, String creatorName) {
         informationList.add(new Information(info, creatorName));
     }
@@ -82,10 +78,8 @@ public class Room implements Serializable {
         }
     }
 
-    // =========================================================
-    //                          AGENDA
-    // =========================================================
 
+    //AGENDA
     public void addAgenda(String time, String entry) {
         agendaList.add(new Agenda(time, entry));
     }
@@ -100,11 +94,8 @@ public class Room implements Serializable {
         return agendaList;
     }
 
-    // =========================================================
-    //                        UGEPLAN (NY)
-    // =========================================================
 
-    // ✅ Gammel metode – bruges af Institution (kompatibilitet)
+    //UGEPLAN
     public void setCalender(String day, String event) {
         for (Calender c : weekPlan) {
             if (c.getDay().equalsIgnoreCase(day)) {
@@ -125,10 +116,8 @@ public class Room implements Serializable {
         }
     }
 
-    // =========================================================
-    //                         CHILDREN
-    // =========================================================
 
+    //CHILDREN
     public void addChild(Child child) {
         children.add(child);
     }
@@ -141,9 +130,7 @@ public class Room implements Serializable {
         return children.toArray(new Child[0]);
     }
 
-    // =========================================================
-    //                        MISC
-    // =========================================================
+
 
     public String getName() {
         return name;
@@ -152,10 +139,6 @@ public class Room implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    // =========================================================
-    //                        TOSTRING
-    // =========================================================
 
     @Override
     public String toString() {

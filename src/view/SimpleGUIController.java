@@ -28,17 +28,17 @@ public class SimpleGUIController {
     public void init(ViewHandler handler) {
         this.viewHandler = handler;
         this.institution = handler.getInstitution();
-        this.currentRoom = handler.getCurrentRoom();  // ✅ HENTER DEN AKTUELLE STUE
+        this.currentRoom = handler.getCurrentRoom();  // HENTER DEN AKTUELLE STUE
 
-        // ✅ Kun hvis der IKKE findes nogen stue endnu
+        // Kun hvis der IKKE findes nogen stue endnu
         if (institution.getRooms().length == 0) {
-            institution.addRoom("Rød stue");
+            institution.addRoom("Red room");
             handler.saveInstitution();
             handler.setCurrentRoom(institution.getRooms()[0]);
             currentRoom = institution.getRooms()[0];
         }
 
-        // ✅ Hvis currentRoom ikke er sat endnu (første opstart)
+        // Hvis currentRoom ikke er sat endnu (første opstart)
         if (currentRoom == null) {
             currentRoom = institution.getRooms()[0];
             handler.setCurrentRoom(currentRoom);
@@ -52,7 +52,7 @@ public class SimpleGUIController {
     }
 
 
-    // ===== INITIALISÉR STUE-DROPDOWN =====
+    //INITIALISER STUE DROPDOWN
     private void initRoomComboBox() {
         roomComboBox.getItems().clear();
 
@@ -61,7 +61,7 @@ public class SimpleGUIController {
             roomComboBox.getItems().add(r.getName());
         }
 
-        // ✅ Vælg den AKTUELLE stue i dropdown
+        // Vælg den AKTUELLE stue i dropdown
         if (currentRoom != null) {
             roomComboBox.getSelectionModel().select(currentRoom.getName());
         } else if (!roomComboBox.getItems().isEmpty()) {
@@ -71,7 +71,7 @@ public class SimpleGUIController {
     }
 
     private void initWeekdayComboBox() {
-        weekdayComboBox.getItems().setAll("Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag");
+        weekdayComboBox.getItems().setAll("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
         weekdayComboBox.getSelectionModel().selectFirst();
     }
 
@@ -95,7 +95,7 @@ public class SimpleGUIController {
     @FXML
     private void handleAddRoom() {
         TextInputDialog d = new TextInputDialog();
-        d.setHeaderText("Ny stue:");
+        d.setHeaderText("New room:");
         d.showAndWait().ifPresent(name -> {
             institution.addRoom(name);
             viewHandler.saveInstitution();
@@ -141,15 +141,15 @@ public class SimpleGUIController {
     private void updateRoomView() {
         if (currentRoom == null) return;
 
-        // ===== BØRNEOVERSIGT (kun valgt stue) =====
-        childrenTitleButton.setText("Børneoversigt: " + currentRoom.getName());
+        // BØRNEOVERSIGT (kun valgt stue)
+        childrenTitleButton.setText("Child overview: " + currentRoom.getName());
 
         childrenListView.getItems().clear();
         for (Child c : currentRoom.getChildren()) {
-            childrenListView.getItems().add(c.getName() + " (" + c.getAge() + " år)");
+            childrenListView.getItems().add(c.getName() + " (" + c.getAge() + " Years old)");
         }
 
-        // ===== ✅ BEMANDING (ALLE STUER PÅ ÉN GANG) =====
+        //  BEMANDING (ALLE STUER PÅ ÉN GANG)
         staffListView.getItems().clear();
 
         for (Room room : institution.getRooms()) {

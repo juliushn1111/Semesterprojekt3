@@ -24,13 +24,13 @@ public class InfoViewController {
 
     private int selectedIndex = -1;
 
-    // ---------- INIT ----------
+    //INIT
     public void init(ViewHandler handler) {
         this.viewHandler = handler;
         this.institution = handler.getInstitution();
         this.currentRoom = handler.getCurrentRoom();
 
-        // Lytter på valg i listen
+        // Lytter på valg i listen, sørger for, at når brugeren klikker på et punkt i listen, så gemmes det
         infoListView.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> {
             selectedIndex = newVal.intValue();
             loadSelectedIntoFields();
@@ -59,7 +59,7 @@ public class InfoViewController {
         String name = nameInputField.getText().trim();
 
         if (text.isEmpty()) return;
-        if (name.isEmpty()) name = "Ukendt";
+        if (name.isEmpty()) name = "Unkown";
 
         currentRoom.addInformation(text, name);
 
@@ -94,7 +94,7 @@ public class InfoViewController {
         String newName = nameInputField.getText().trim();
 
         if (newText.isEmpty()) return;
-        if (newName.isEmpty()) newName = "Ukendt";
+        if (newName.isEmpty()) newName = "Unkown";
 
         Information info = currentRoom.getInformationList().get(selectedIndex);
         info.setInfo(newText);
